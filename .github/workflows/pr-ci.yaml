@@ -21,8 +21,8 @@ jobs:
     - name: Verify Changed files
       uses: tj-actions/verify-changed-files@v10.1
       id: verify-changed-files
-      working-directory: helm
       with:
+        working-directory: helm
         files: |
            test-file.txt
 
