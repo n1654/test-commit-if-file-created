@@ -19,10 +19,10 @@ jobs:
         echo "1st_line" > test-file.txt
 
     - name: Verify Changed files
+      working-directory: helm
       uses: tj-actions/verify-changed-files@v10.1
       id: verify-changed-files
       with:
-        working-directory: helm
         files: |
            test-file.txt
 
