@@ -22,8 +22,9 @@ jobs:
       uses: tj-actions/verify-changed-files@v10.1
       id: verify-changed-files
       with:
+        working-directory: helm
         files: |
-           **/helm/test-file.txt
+           test-file.txt
 
     - name: Run step only when files change.
       if: steps.verify-changed-files.outputs.files_changed == 'true'
