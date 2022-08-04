@@ -11,7 +11,7 @@ jobs:
 
     - name: Create
       run: |
-        echo "test_line" > test-file.txt
+        echo "test_line_2" >> test-file.txt
 
     - name: Verify Changed files
       uses: tj-actions/verify-changed-files@v10.1
