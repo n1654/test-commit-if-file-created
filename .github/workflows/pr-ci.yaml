@@ -6,16 +6,22 @@ jobs:
   create-file-and-commit:
     name: Create file and commit
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: terraform
     steps:
     - uses: actions/checkout@v2
 
     - name: Create
+      working-directory: terraform
       run: |
-        sleep 2
+        echo "1st_line" > test-file.txt
 
     - name: Verify Changed files
       uses: tj-actions/verify-changed-files@v10.1
       id: verify-changed-files
+      working-directory: helm
       with:
         files: |
            test-file.txt
