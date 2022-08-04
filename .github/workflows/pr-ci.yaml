@@ -1,0 +1,42 @@
+name: Deployment
+on:
+  workflow_dispatch:
+
+jobs:
+  create-file-and-commit:
+    name: Create file and commit
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Create
+      run: |
+        echo "test_line" > test-file.txt
+
+    - name: Verify Changed files
+      uses: tj-actions/verify-changed-files@v10.1
+      id: verify-changed-files
+      with:
+        files: |
+           test-file.txt
+
+    - name: Run step only when files change.
+      if: steps.verify-changed-files.outputs.files_changed == 'true'
+      run: |
+        echo "Changed files: ${{ steps.verify-changed-files.outputs.changed_files }}"
+      # Outputs: "Changed files: new.txt test_directory/new.txt"
+
+    - name: Git commit parsed files if tests passed
+      if: steps.verify-changed-files.outputs.files_changed == 'true'
+      run: |
+        git config --global user.name "$(git --no-pager log --format=format:'%an' -n 1)"
+        git config --global user.email "$(git --no-pager log --format=format:'%ae' -n 1)"
+        git add .
+        git diff-index --quiet HEAD || git commit -m "ci-auto: file was modified"
+
+    - name: Git push changes if tests passed
+      if: steps.verify-changed-files.outputs.files_changed == 'true'
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ github.head_ref }}
