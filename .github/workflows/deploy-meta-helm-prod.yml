@@ -1,0 +1,31 @@
+name: Deploy Helm chart Prod
+on:
+  push:
+    branches:
+      - feature/helm-deployment
+
+env:
+  REGISTRY_NAME: index.docker.io
+  REGISTRY_USERNAME: metaphactscustomers
+
+jobs:
+  deploy:
+    environment: production
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@main
+
+    - name: 'Install Helm'
+      run: |
+        sudo snap install helm --classic
+
+    # - name: 'Install Certmanager'
+    #   run: |
+    #     helm repo add jetstack https://charts.jetstack.io
+    #     helm repo update
+    #     helm install \
+    #         cert-manager jetstack/cert-manager \
+    #         --namespace cert-manager \
+    #         --create-namespace \
+    #         --version v1.9.1 \
+    #         --set installCRDs=true
