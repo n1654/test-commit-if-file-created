@@ -1,4 +1,4 @@
-name: Deployment
+name: Check ENV
 on:
   workflow_dispatch:
 
@@ -6,7 +6,7 @@ env:
   NAME: my_name
 
 jobs:
-  deploy:
+  test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@main
@@ -17,4 +17,4 @@ jobs:
 
     - name: 'Check env vars'
       run: |
-        echo ${{ env.NAME }}
+        echo "this is my name: " ${{ env.NAME }}
