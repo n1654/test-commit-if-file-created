@@ -1,0 +1,20 @@
+name: Deployment
+on:
+  workflow_dispatch:
+
+env:
+  NAME: my_name
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@main
+
+    - name: 'Check helm'
+      run: |
+        helm version
+
+    - name: 'Check env vars'
+      run: |
+        echo ${{ env.NAME }}
