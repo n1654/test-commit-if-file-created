@@ -18,3 +18,18 @@ jobs:
     - name: 'Check env vars'
       run: |
         echo "this is my name: " ${{ env.NAME }}
+
+    - name: 'Dummy Step'
+      id: condition_1
+      continue-on-error: true
+      run: blablabla
+
+
+    - name: 'Check 1st condition'
+      id: condition_2
+      if: steps.condition_1.outcome=='failure'
+      run: echo "awesome!"
+
+    - name: 'Check 2nd condition'
+      if: steps.condition_1.outcome=='failure' && steps.condition_2.outcome=='success'
+      run: echo "awesome!"
