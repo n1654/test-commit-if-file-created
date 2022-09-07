@@ -27,8 +27,9 @@ jobs:
 
     - name: 'Check 1st condition'
       id: condition_2
+      continue-on-error: true
       if: steps.condition_1.outcome=='failure'
-      run: echo "awesome!"
+      run: blablabla
 
     - name: 'Check 2nd condition'
       if: steps.condition_1.outcome=='failure' && steps.condition_2.outcome=='success'
